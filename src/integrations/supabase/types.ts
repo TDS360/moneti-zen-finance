@@ -14,7 +14,253 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      accounts: {
+        Row: {
+          balance: number
+          created_at: string
+          id: string
+          name: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          id?: string
+          name: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          id?: string
+          name?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          monthly_limit: number | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          id?: string
+          monthly_limit?: number | null
+          name: string
+          user_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          monthly_limit?: number | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          parts: Json
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          parts: Json
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          parts?: Json
+          role?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "chat_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_threads: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      goals: {
+        Row: {
+          created_at: string
+          current_amount: number
+          deadline: string | null
+          id: string
+          name: string
+          target_amount: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_amount?: number
+          deadline?: string | null
+          id?: string
+          name: string
+          target_amount: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_amount?: number
+          deadline?: string | null
+          id?: string
+          name?: string
+          target_amount?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          currency: string
+          full_name: string | null
+          id: string
+          theme: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          full_name?: string | null
+          id: string
+          theme?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          full_name?: string | null
+          id?: string
+          theme?: string
+        }
+        Relationships: []
+      }
+      recurring_bills: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string
+          frequency: string
+          id: string
+          name: string
+          next_due: string
+          reminders_enabled: boolean
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string
+          frequency?: string
+          id?: string
+          name: string
+          next_due: string
+          reminders_enabled?: boolean
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string
+          frequency?: string
+          id?: string
+          name?: string
+          next_due?: string
+          reminders_enabled?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          account_id: string | null
+          amount: number
+          category: string | null
+          created_at: string
+          id: string
+          note: string | null
+          occurred_at: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          account_id?: string | null
+          amount: number
+          category?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          occurred_at?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          account_id?: string | null
+          amount?: number
+          category?: string | null
+          created_at?: string
+          id?: string
+          note?: string | null
+          occurred_at?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
