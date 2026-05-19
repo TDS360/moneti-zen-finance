@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AppTipsRouteImport } from './routes/_app/tips'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppInvestmentsRouteImport } from './routes/_app/investments'
@@ -21,6 +22,8 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppBudgetRouteImport } from './routes/_app/budget'
 import { Route as AppBillsRouteImport } from './routes/_app/bills'
 import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppCoachIndexRouteImport } from './routes/_app/coach.index'
+import { Route as AppCoachThreadIdRouteImport } from './routes/_app/coach.$threadId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -39,6 +42,11 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppTipsRoute = AppTipsRouteImport.update({
@@ -81,6 +89,16 @@ const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCoachIndexRoute = AppCoachIndexRouteImport.update({
+  id: '/coach/',
+  path: '/coach/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCoachThreadIdRoute = AppCoachThreadIdRouteImport.update({
+  id: '/coach/$threadId',
+  path: '/coach/$threadId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,6 +112,9 @@ export interface FileRoutesByFullPath {
   '/investments': typeof AppInvestmentsRoute
   '/settings': typeof AppSettingsRoute
   '/tips': typeof AppTipsRoute
+  '/api/chat': typeof ApiChatRoute
+  '/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/coach/': typeof AppCoachIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +128,9 @@ export interface FileRoutesByTo {
   '/investments': typeof AppInvestmentsRoute
   '/settings': typeof AppSettingsRoute
   '/tips': typeof AppTipsRoute
+  '/api/chat': typeof ApiChatRoute
+  '/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/coach': typeof AppCoachIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +146,9 @@ export interface FileRoutesById {
   '/_app/investments': typeof AppInvestmentsRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/tips': typeof AppTipsRoute
+  '/api/chat': typeof ApiChatRoute
+  '/_app/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/_app/coach/': typeof AppCoachIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +164,9 @@ export interface FileRouteTypes {
     | '/investments'
     | '/settings'
     | '/tips'
+    | '/api/chat'
+    | '/coach/$threadId'
+    | '/coach/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +180,9 @@ export interface FileRouteTypes {
     | '/investments'
     | '/settings'
     | '/tips'
+    | '/api/chat'
+    | '/coach/$threadId'
+    | '/coach'
   id:
     | '__root__'
     | '/'
@@ -164,6 +197,9 @@ export interface FileRouteTypes {
     | '/_app/investments'
     | '/_app/settings'
     | '/_app/tips'
+    | '/api/chat'
+    | '/_app/coach/$threadId'
+    | '/_app/coach/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +207,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -201,6 +238,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/tips': {
@@ -259,6 +303,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/coach/': {
+      id: '/_app/coach/'
+      path: '/coach'
+      fullPath: '/coach/'
+      preLoaderRoute: typeof AppCoachIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/coach/$threadId': {
+      id: '/_app/coach/$threadId'
+      path: '/coach/$threadId'
+      fullPath: '/coach/$threadId'
+      preLoaderRoute: typeof AppCoachThreadIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -271,6 +329,8 @@ interface AppRouteChildren {
   AppInvestmentsRoute: typeof AppInvestmentsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTipsRoute: typeof AppTipsRoute
+  AppCoachThreadIdRoute: typeof AppCoachThreadIdRoute
+  AppCoachIndexRoute: typeof AppCoachIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -282,6 +342,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppInvestmentsRoute: AppInvestmentsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTipsRoute: AppTipsRoute,
+  AppCoachThreadIdRoute: AppCoachThreadIdRoute,
+  AppCoachIndexRoute: AppCoachIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -291,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

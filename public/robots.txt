@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /budget
+Disallow: /bills
+Disallow: /analytics
+Disallow: /goals
+Disallow: /investments
+Disallow: /coach
+Disallow: /tips
+Disallow: /settings

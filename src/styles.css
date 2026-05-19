@@ -34,9 +34,11 @@
   --color-sage-50: var(--sage-50);
   --color-sage-100: var(--sage-100);
   --color-sage-200: var(--sage-200);
+  --color-sage-300: var(--sage-300);
   --color-sage-500: var(--sage-500);
   --color-sage-600: var(--sage-600);
   --color-sage-700: var(--sage-700);
+  --color-sage-800: var(--sage-800);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -77,9 +79,11 @@
   --sage-50: oklch(0.97 0.012 145);
   --sage-100: oklch(0.93 0.022 145);
   --sage-200: oklch(0.86 0.03 145);
+  --sage-300: oklch(0.78 0.04 145);
   --sage-500: oklch(0.55 0.05 145);
   --sage-600: oklch(0.42 0.04 145);
   --sage-700: oklch(0.32 0.04 145);
+  --sage-800: oklch(0.25 0.03 145);
   --chart-1: oklch(0.42 0.04 145);
   --chart-2: oklch(0.55 0.05 145);
   --chart-3: oklch(0.7 0.04 145);
