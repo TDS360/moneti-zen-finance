@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import type { UIMessage } from "ai";
+type SerializedMessage = { id: string; role: string; parts: unknown[] };
 
 export const listThreads = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -40,10 +40,10 @@ export const getThread = createServerFn({ method: "POST" })
     if (tErr) throw new Error(tErr.message);
     if (mErr) throw new Error(mErr.message);
     if (!thread) throw new Error("Thread not found");
-    const messages: UIMessage[] = (msgs ?? []).map((m) => ({
+    const messages: SerializedMessage[] = (msgs ?? []).map((m) => ({
       id: m.id,
-      role: m.role as UIMessage["role"],
-      parts: (m.parts as UIMessage["parts"]) ?? [],
+      role: m.role,
+      parts: (m.parts as unknown[]) ?? [],
     }));
     return { thread, messages };
   });
