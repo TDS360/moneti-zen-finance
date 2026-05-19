@@ -43,7 +43,7 @@ export const getThread = createServerFn({ method: "POST" })
     const messages: SerializedMessage[] = (msgs ?? []).map((m) => ({
       id: m.id,
       role: m.role,
-      parts: (m.parts as unknown[]) ?? [],
+      parts: (m.parts as Json) ?? [],
     }));
     return { thread, messages };
   });
