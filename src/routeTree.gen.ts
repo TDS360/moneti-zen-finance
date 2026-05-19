@@ -22,6 +22,8 @@ import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
 import { Route as AppBudgetRouteImport } from './routes/_app/budget'
 import { Route as AppBillsRouteImport } from './routes/_app/bills'
 import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppCoachIndexRouteImport } from './routes/_app/coach.index'
+import { Route as AppCoachThreadIdRouteImport } from './routes/_app/coach.$threadId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -87,6 +89,16 @@ const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCoachIndexRoute = AppCoachIndexRouteImport.update({
+  id: '/coach/',
+  path: '/coach/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCoachThreadIdRoute = AppCoachThreadIdRouteImport.update({
+  id: '/coach/$threadId',
+  path: '/coach/$threadId',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,6 +113,8 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AppSettingsRoute
   '/tips': typeof AppTipsRoute
   '/api/chat': typeof ApiChatRoute
+  '/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/coach/': typeof AppCoachIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,6 +129,8 @@ export interface FileRoutesByTo {
   '/settings': typeof AppSettingsRoute
   '/tips': typeof AppTipsRoute
   '/api/chat': typeof ApiChatRoute
+  '/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/coach': typeof AppCoachIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,6 +147,8 @@ export interface FileRoutesById {
   '/_app/settings': typeof AppSettingsRoute
   '/_app/tips': typeof AppTipsRoute
   '/api/chat': typeof ApiChatRoute
+  '/_app/coach/$threadId': typeof AppCoachThreadIdRoute
+  '/_app/coach/': typeof AppCoachIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +165,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tips'
     | '/api/chat'
+    | '/coach/$threadId'
+    | '/coach/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -161,6 +181,8 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tips'
     | '/api/chat'
+    | '/coach/$threadId'
+    | '/coach'
   id:
     | '__root__'
     | '/'
@@ -176,6 +198,8 @@ export interface FileRouteTypes {
     | '/_app/settings'
     | '/_app/tips'
     | '/api/chat'
+    | '/_app/coach/$threadId'
+    | '/_app/coach/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -279,6 +303,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/coach/': {
+      id: '/_app/coach/'
+      path: '/coach'
+      fullPath: '/coach/'
+      preLoaderRoute: typeof AppCoachIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/coach/$threadId': {
+      id: '/_app/coach/$threadId'
+      path: '/coach/$threadId'
+      fullPath: '/coach/$threadId'
+      preLoaderRoute: typeof AppCoachThreadIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -291,6 +329,8 @@ interface AppRouteChildren {
   AppInvestmentsRoute: typeof AppInvestmentsRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppTipsRoute: typeof AppTipsRoute
+  AppCoachThreadIdRoute: typeof AppCoachThreadIdRoute
+  AppCoachIndexRoute: typeof AppCoachIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -302,6 +342,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppInvestmentsRoute: AppInvestmentsRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppTipsRoute: AppTipsRoute,
+  AppCoachThreadIdRoute: AppCoachThreadIdRoute,
+  AppCoachIndexRoute: AppCoachIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -316,3 +358,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
