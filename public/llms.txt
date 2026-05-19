@@ -1,0 +1,8 @@
+# Moneti
+
+> Minimalist personal finance platform to track money, budget, save, learn investing, and chat with an AI money coach.
+
+## Pages
+- [Home](/): Product overview and hero
+- [Sign up](/signup): Create a Moneti account
+- [Log in](/login): Sign in to your account
