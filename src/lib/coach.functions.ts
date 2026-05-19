@@ -1,7 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-type SerializedMessage = { id: string; role: string; parts: unknown[] };
+type Json = string | number | boolean | null | Json[] | { [k: string]: Json };
+type SerializedMessage = { id: string; role: string; parts: Json };
 
 export const listThreads = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
