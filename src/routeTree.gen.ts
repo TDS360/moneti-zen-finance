@@ -11,7 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppTipsRouteImport } from './routes/_app/tips'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppInvestmentsRouteImport } from './routes/_app/investments'
+import { Route as AppGoalsRouteImport } from './routes/_app/goals'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppBudgetRouteImport } from './routes/_app/budget'
+import { Route as AppBillsRouteImport } from './routes/_app/bills'
+import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -23,38 +32,143 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppTipsRoute = AppTipsRouteImport.update({
+  id: '/tips',
+  path: '/tips',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInvestmentsRoute = AppInvestmentsRouteImport.update({
+  id: '/investments',
+  path: '/investments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGoalsRoute = AppGoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBudgetRoute = AppBudgetRouteImport.update({
+  id: '/budget',
+  path: '/budget',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillsRoute = AppBillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/bills': typeof AppBillsRoute
+  '/budget': typeof AppBudgetRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/goals': typeof AppGoalsRoute
+  '/investments': typeof AppInvestmentsRoute
+  '/settings': typeof AppSettingsRoute
+  '/tips': typeof AppTipsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/bills': typeof AppBillsRoute
+  '/budget': typeof AppBudgetRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/goals': typeof AppGoalsRoute
+  '/investments': typeof AppInvestmentsRoute
+  '/settings': typeof AppSettingsRoute
+  '/tips': typeof AppTipsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/bills': typeof AppBillsRoute
+  '/_app/budget': typeof AppBudgetRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/goals': typeof AppGoalsRoute
+  '/_app/investments': typeof AppInvestmentsRoute
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/tips': typeof AppTipsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/analytics'
+    | '/bills'
+    | '/budget'
+    | '/dashboard'
+    | '/goals'
+    | '/investments'
+    | '/settings'
+    | '/tips'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup'
-  id: '__root__' | '/' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/analytics'
+    | '/bills'
+    | '/budget'
+    | '/dashboard'
+    | '/goals'
+    | '/investments'
+    | '/settings'
+    | '/tips'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/login'
+    | '/signup'
+    | '/_app/analytics'
+    | '/_app/bills'
+    | '/_app/budget'
+    | '/_app/dashboard'
+    | '/_app/goals'
+    | '/_app/investments'
+    | '/_app/settings'
+    | '/_app/tips'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
 }
@@ -75,6 +189,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,11 +203,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/tips': {
+      id: '/_app/tips'
+      path: '/tips'
+      fullPath: '/tips'
+      preLoaderRoute: typeof AppTipsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/investments': {
+      id: '/_app/investments'
+      path: '/investments'
+      fullPath: '/investments'
+      preLoaderRoute: typeof AppInvestmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/goals': {
+      id: '/_app/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof AppGoalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/budget': {
+      id: '/_app/budget'
+      path: '/budget'
+      fullPath: '/budget'
+      preLoaderRoute: typeof AppBudgetRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/bills': {
+      id: '/_app/bills'
+      path: '/bills'
+      fullPath: '/bills'
+      preLoaderRoute: typeof AppBillsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppBillsRoute: typeof AppBillsRoute
+  AppBudgetRoute: typeof AppBudgetRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppGoalsRoute: typeof AppGoalsRoute
+  AppInvestmentsRoute: typeof AppInvestmentsRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppTipsRoute: typeof AppTipsRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppBillsRoute: AppBillsRoute,
+  AppBudgetRoute: AppBudgetRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppGoalsRoute: AppGoalsRoute,
+  AppInvestmentsRoute: AppInvestmentsRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppTipsRoute: AppTipsRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
 }
