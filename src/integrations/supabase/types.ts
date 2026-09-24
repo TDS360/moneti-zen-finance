@@ -41,6 +41,24 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_usage: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           color: string
@@ -127,6 +145,66 @@ export type Database = {
         }
         Relationships: []
       }
+      debts: {
+        Row: {
+          balance: number
+          created_at: string
+          extra_payment: number
+          id: string
+          interest_rate: number
+          kind: string
+          minimum_payment: number
+          name: string
+          user_id: string
+        }
+        Insert: {
+          balance: number
+          created_at?: string
+          extra_payment?: number
+          id?: string
+          interest_rate?: number
+          kind?: string
+          minimum_payment?: number
+          name: string
+          user_id?: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          extra_payment?: number
+          id?: string
+          interest_rate?: number
+          kind?: string
+          minimum_payment?: number
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      emergency_funds: {
+        Row: {
+          current_amount: number
+          monthly_contribution: number
+          target_amount: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          current_amount?: number
+          monthly_contribution?: number
+          target_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          current_amount?: number
+          monthly_contribution?: number
+          target_amount?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       goals: {
         Row: {
           created_at: string
@@ -157,26 +235,89 @@ export type Database = {
         }
         Relationships: []
       }
+      net_worth_items: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          side: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          side: string
+          user_id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          side?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      net_worth_snapshots: {
+        Row: {
+          assets: number
+          created_at: string
+          id: string
+          liabilities: number
+          snapshot_date: string
+          user_id: string
+        }
+        Insert: {
+          assets?: number
+          created_at?: string
+          id?: string
+          liabilities?: number
+          snapshot_date?: string
+          user_id?: string
+        }
+        Update: {
+          assets?: number
+          created_at?: string
+          id?: string
+          liabilities?: number
+          snapshot_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
           currency: string
+          demo_enabled: boolean
           full_name: string | null
           id: string
+          onboarded: boolean
           theme: string
         }
         Insert: {
           created_at?: string
           currency?: string
+          demo_enabled?: boolean
           full_name?: string | null
           id: string
+          onboarded?: boolean
           theme?: string
         }
         Update: {
           created_at?: string
           currency?: string
+          demo_enabled?: boolean
           full_name?: string | null
           id?: string
+          onboarded?: boolean
           theme?: string
         }
         Relationships: []
@@ -224,6 +365,8 @@ export type Database = {
           category: string | null
           created_at: string
           id: string
+          is_recurring: boolean
+          merchant: string | null
           note: string | null
           occurred_at: string
           type: string
@@ -235,6 +378,8 @@ export type Database = {
           category?: string | null
           created_at?: string
           id?: string
+          is_recurring?: boolean
+          merchant?: string | null
           note?: string | null
           occurred_at?: string
           type: string
@@ -246,6 +391,8 @@ export type Database = {
           category?: string | null
           created_at?: string
           id?: string
+          is_recurring?: boolean
+          merchant?: string | null
           note?: string | null
           occurred_at?: string
           type?: string
